@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+
+int main(void) {
+  // estructura de un DNSRecord
+  struct DNSRecord {
+    char domain[256];
+    char ip_address[16];
+  };
+
+  // lista de registros DNS
+  struct DNSRecord dns_database[100];
+  int num_records = 0;
+
+  return 0;
+}
+
+void agregarRegistroDNS(struct DNSRecord dns_database[], int *num_records,
+                        const char *domain, const char *ip_address) {
+  if (*num_records >= 100) {
+    printf("Error: La base de datos de registros DNS está llena");
+    return;
+  }
+
+  strcpy(dns_database[*num_records].domain, domain);
+  strcpy(dns_database[*num_records].ip_address, ip_address);
+  (*num_records)++;
+}
+
+const char *buscarIPPorDominio(struct DNSRecord dns_database[], int num_records,
+                               const char *nombreDominio) {
+  const char *msg = NULL;
+
+  // ciclo para buscar dentro de todo el arreglo un regitro DNS
+  for (int i = 0; i < num_records; i++) {
+    // comparamos si el nombre del dominio a buscar es igual al nombre del
+    // dominio de la posicion en la que nos encontramos en el arreglo para que
+    // si es igual nos devuelva la ip.
+    if (strcmp(nombreDominio, dns_database[i].domain) == 0) {
+      msg = dns_database[i].ip_address;
+      break;
+    }
+  }
+
+  return msg;
+}
