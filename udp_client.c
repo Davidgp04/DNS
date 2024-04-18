@@ -52,8 +52,8 @@ int main() {
         }
 
         if (FD_ISSET(sock, &read)) {
-            char read1[400];
-            int bytes_received = recv(sock, read1, 400, 0);
+            char read1[4000];
+            int bytes_received = recv(sock, read1, 4000, 0);
             if (bytes_received < 1) {
                 printf("Conexión cerrada\n");
                 break;
@@ -65,7 +65,7 @@ int main() {
             char read2[4096];
             if (!fgets(read2, 4096, stdin)) break;
             printf("Dominio: %s\n", read2);
-            int bytes_sent = send(sock, read2, strlen(read1), 0);
+            int bytes_sent = send(sock, read2, strlen(read2), 0);
         }
     }
 
