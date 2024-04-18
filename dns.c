@@ -60,6 +60,7 @@ const char *buscarIPPorDominio(struct DNSRecord dns_database[], int num_records,
 int main(){
    struct DNSRecord dns_database[10];
   int num_records = 0;
+  agregarRegistroDNS(dns_database, &num_records, "www.eafit.edu.co","140.82.113.3");
 
     //We create the local server
     struct addrinfo hints;
@@ -70,7 +71,7 @@ int main(){
 
     //We place the local address
     struct addrinfo *bind_address;
-    getaddrinfo(0, "8080", &hints, &bind_address);
+    getaddrinfo("172.31.83.108", "57", &hints, &bind_address);
 
 
      //We create the listener socket
