@@ -71,7 +71,7 @@ int main(){
 
     //We place the local address
     struct addrinfo *bind_address;
-    getaddrinfo("18.212.62.23", "8080", &hints, &bind_address);
+    getaddrinfo("172.31.83.108", "8080", &hints, &bind_address);
 
 
      //We create the listener socket
