@@ -19,7 +19,7 @@ int main() {
     set1.ai_socktype=SOCK_DGRAM;
 
     struct addrinfo *listener;
-    if (getaddrinfo("172.31.83.108", "57", &set1, &listener)){
+    if (getaddrinfo("10.161.53.114", "57", &set1, &listener)){
         printf("Todo salió bien...\n");
     }    
 
