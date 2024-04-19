@@ -115,7 +115,7 @@ int main(){
 
   num_records++;
     word[bytes_received-1]='\0';
-    printf("%s",word);
+    printf("%s\n",word);
     const char* value=buscarIPPorDominio(dns_database, num_records, word);
 
   if (value){
