@@ -19,7 +19,8 @@ int main() {
     set1.ai_socktype=SOCK_DGRAM;
 
     struct addrinfo *listener;
-    if (getaddrinfo("10.161.53.114", "57", &set1, &listener)){
+    socklen_t listener_len = sizeof(listener);
+    if (getaddrinfo("127.0.0.1", "8080", &set1, &listener)){
         printf("Todo salió bien...\n");
     }    
 
@@ -58,6 +59,7 @@ int main() {
                 printf("Conexión cerrada\n");
                 break;
             }
+            read1[bytes_received]='\0';
             printf("Dirección IP: %s\n", read1);
         }
 
