@@ -26,12 +26,10 @@ void agregarRegistroDNS(struct DNSRecord dns_database[], int *num_records, const
     printf("Error: La base de datos de registros DNS está llena\n");
     return;
   }
-
    for (int i = *num_records; i > 0; i--) {
         strcpy(dns_database[i].domain, dns_database[i - 1].domain);
         strcpy(dns_database[i].ip_address, dns_database[i - 1].ip_address);
     }
-
 
   strcpy(dns_database[0].domain, domain);
   strcpy(dns_database[0].ip_address, ip_address);
@@ -71,7 +69,7 @@ int main(){
 
     //We place the local address
     struct addrinfo *bind_address;
-    getaddrinfo(NULL, "8080", &hints, &bind_address);
+    getaddrinfo(0, "8080", &hints, &bind_address);
 
 
      //We create the listener socket
@@ -110,11 +108,21 @@ int main(){
     hints2.ai_socktype = SOCK_DGRAM;
     hints2.ai_flags = AI_PASSIVE;
     struct addrinfo *ip_address;
-    char word[bytes_received+1];
+    char word[bytes_received];
     for (int i=0;i<bytes_received-1;++i) word[i]=read[i];
-
-  num_records++;
     word[bytes_received-1]='\0';
+    printf("%s\n",word);
+    if (strcasecmp(word, "cache") == 0){
+      for (int i=0;i<num_records;i++){
+        if (num_records>=10){
+          break;
+        }
+        printf("%s\t%s\n",dns_database[i].domain,dns_database[i].ip_address);
+      }
+        continue;
+    }
+    
+    
     printf("%s\n",word);
     const char* value=buscarIPPorDominio(dns_database, num_records, word);
 
@@ -128,7 +136,7 @@ int main(){
     int status = getaddrinfo(word, NULL, &hints2, &ip_address);
 if (status != 0) {
     fprintf(stderr, "getaddrinfo() failed: %s\n", gai_strerror(status));
-    return 1;
+    continue;
 }
 
     struct addrinfo *address = ip_address;
@@ -142,9 +150,11 @@ if (status != 0) {
     int bytes_sent=sendto(socket_listen, address_buffer, sizeof(address_buffer), 0, (struct sockaddr*)&client_address,
     client_len);
     printf("Sent: %s, (%ld)\n",address_buffer,  sizeof(address_buffer));
-    char address2[bytes_sent];
+    char address2[bytes_sent+1];
     for (int j=0;j<bytes_sent-1;++j) address2[j]=address_buffer[j];
+    address2[bytes_sent]='\0';
     agregarRegistroDNS(dns_database, &num_records, word,address2);
+    num_records++;
     freeaddrinfo(ip_address);
     }
   
