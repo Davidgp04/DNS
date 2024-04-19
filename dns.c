@@ -136,7 +136,7 @@ int main(){
     int status = getaddrinfo(word, NULL, &hints2, &ip_address);
 if (status != 0) {
     fprintf(stderr, "getaddrinfo() failed: %s\n", gai_strerror(status));
-    exit(0);
+    continue;
 }
 
     struct addrinfo *address = ip_address;
