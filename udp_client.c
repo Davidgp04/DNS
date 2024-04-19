@@ -13,14 +13,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-int main() {
+int main(int argc, char *argv[]) {
     struct addrinfo set1;
     memset(&set1, 0, sizeof(set1));
     set1.ai_socktype=SOCK_DGRAM;
-
+    if (argc!=2){
+        printf("Por favor ingresa la IP del servidor...\n");
+    }
     struct addrinfo *listener;
     socklen_t listener_len = sizeof(listener);
-    if (getaddrinfo("127.0.0.1", "8080", &set1, &listener)){
+    if (getaddrinfo(argv[1], "8080", &set1, &listener)){
         printf("Todo salió bien...\n");
     }    
 
