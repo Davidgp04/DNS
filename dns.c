@@ -58,7 +58,7 @@ const char *buscarIPPorDominio(struct DNSRecord dns_database[], int num_records,
 int main(){
    struct DNSRecord dns_database[10];
   int num_records = 0;
-  agregarRegistroDNS(dns_database, &num_records, "www.eafit.edu.co","140.82.113.3");
+  agregarRegistroDNS(dns_database, &num_records, "www.eafit.edu.co","192.168.212.156");
 
     //We create the local server
     struct addrinfo hints;
